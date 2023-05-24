@@ -37,10 +37,42 @@
 // }
 
 
+/**
+ * 
+ * jvt token kullanıcagız authless  authorization için aldıgıgımız token i storage edecegiz ve browser acıldıgında herseferinde onu kullanacagız 
+ * tekrar tekrar post reqest atmaya ve login olmaya gerek kalmayacak
+ */
+
+
+
+
+
+
 Cypress.Commands.add('loginToApplication', ()=>{
-    cy.visit('/login')
+   /* cy.visit('/login')
     cy.get('[placeholder="Email"]').type("pacacierdogan1@gmail.com")
     cy.get('[placeholder="Password"]').type("123")
     cy.get('form').submit()
+*/
+
+        const userCredential = {
+             "user": {
+                "email": "pacacierdogan1@gmail.com",
+                "password": "123"
+            }
+        }
+
+cy.request('POST', 'https://api.realworld.io/api/users/login', userCredential)
+.its('body').then(body => {
+    const token =body.user.token
+    cy.wrap(token).as('token')
+    cy.visit('/', {
+        onBeforeLoad (win){
+            win.localStorage.setItem('jwtToken', token)
+        }
+    })
 
 })
+
+})
+
