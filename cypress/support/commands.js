@@ -57,12 +57,12 @@ Cypress.Commands.add('loginToApplication', ()=>{
 
         const userCredential = {
              "user": {
-                "email": "pacacierdogan1@gmail.com",
-                "password": "123"
+                "email": Cypress.env("username"),
+                "password" : Cypress.env("password")
             }
         }
 
-cy.request('POST', 'https://api.realworld.io/api/users/login', userCredential)
+cy.request('POST', Cypress.env('apiUrl') + '/api/users/login', userCredential)
 .its('body').then(body => {
     const token =body.user.token
     cy.wrap(token).as('token')

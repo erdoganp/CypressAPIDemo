@@ -135,7 +135,7 @@ describe("Test with backend", ()=>{
       */
         const bodyRequest = {
             "article": {
-                "title": "Request from API16",
+                "title": "Request from API19",
                 "description": "API test is very easy",
                 "body": "Article body",
                 "tagList": [
@@ -159,7 +159,7 @@ describe("Test with backend", ()=>{
              
 
             cy.request({
-                url : 'https://api.realworld.io/api/articles/',
+                url : Cypress.env('apiUrl')+'/api/articles/', //hangi env ile calısmak istersek bu sekilde belirtiyoruz.
                 headers: {'Authorization' : 'Token ' +token},
                 method : 'POST',
                 body : bodyRequest
@@ -173,12 +173,12 @@ describe("Test with backend", ()=>{
             cy.get('.article-actions').contains(' Delete Article ').click({force : true})
 
             cy.request({
-                url: 'https://api.realworld.io/api/articles?limit=10&offset=0',
+                url: Cypress.env('apiUrl')+'/api/articles?limit=10&offset=0',
                 headers: {'Authorization' : 'Token ' +token},
                 method : 'GET'
 
             }).its('body').then(body =>{
-                expect(body.articles[0].title).not.to.equal('Request from API16')
+                expect(body.articles[0].title).not.to.equal('Request from API19')
             })
 
         })
