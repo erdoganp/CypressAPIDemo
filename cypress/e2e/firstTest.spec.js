@@ -135,7 +135,7 @@ describe("Test with backend", ()=>{
       */
         const bodyRequest = {
             "article": {
-                "title": "Request from API19",
+                "title": "Request from API29",
                 "description": "API test is very easy",
                 "body": "Article body",
                 "tagList": [
@@ -155,18 +155,20 @@ describe("Test with backend", ()=>{
 
 
            //commands.js de belirttiğimiz alias tokenı kullandık
-        cy.get('@token').then(token => {
+   
+
+
+            cy.get('@token').then(token => {
              
 
-            cy.request({
-                url : Cypress.env('apiUrl')+'/api/articles/', //hangi env ile calısmak istersek bu sekilde belirtiyoruz.
-                headers: {'Authorization' : 'Token ' +token},
-                method : 'POST',
-                body : bodyRequest
-            }).then(response =>{
-                expect(response.status).to.equal(200)
-            })
-
+                cy.request({
+                    url : Cypress.env('apiUrl')+'/api/articles/', //hangi env ile calısmak istersek bu sekilde belirtiyoruz.
+                    headers: {'Authorization' : 'Token ' +token},
+                    method : 'POST',
+                    body : bodyRequest
+                }).then(response =>{
+                    expect(response.status).to.equal(200)
+                })
 
             cy.contains('Global Feed').click({force : true})
             cy.get('.preview-link').first().click({force : true})
@@ -178,11 +180,19 @@ describe("Test with backend", ()=>{
                 method : 'GET'
 
             }).its('body').then(body =>{
-                expect(body.articles[0].title).not.to.equal('Request from API19')
+                expect(body.articles[0].title).not.to.equal('Request from API29')
             })
 
         })
     })
 
-//************************************************* */
+    it.only('verfiy use can log out succedfully', () =>{
+    
+    cy.contains('Settings').click({force:true})
+    cy.contains('Or click here to logout').click()
+    cy.get('.navbar-nav').should('contain', 'Sign up')
+        })
+
+           
 })
+//************************************************* */

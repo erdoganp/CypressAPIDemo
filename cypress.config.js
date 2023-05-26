@@ -10,7 +10,8 @@ module.exports = defineConfig({
   env :{
     username : "pacacierdogan1@gmail.com", //cypresss.env.son dosyasına yazdıgımız degerler buradaki degerleri override eder
     password : "123",
-   /**  apiUrl :    "https://api.realworld.io",
+    apiUrl :    "https://api.realworld.io"
+   /**  
     username : "pacacierdogan1@gmail.com",
     password : "123",
     apiUrl :    "campus.test-hub.ku.edu.tr",
