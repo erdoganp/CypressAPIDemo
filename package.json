@@ -9,13 +9,16 @@
     "test": "ng test",
     "lint": "ng lint --force",
     "prepare": "husky install",
-    "cypress:run": "npx cypress run",
-    "cypress:e2e": "start-test start http-get://localhost:4200 cypress:run",
+    "delete:reports": "rmdir /s cypress\\results\\ || true",
+    "prereport": "npm run delete:reports",
+    "mochawesome:merge" :"npx mochawesome-merge \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx marge mochawesome.json",
+    "junit:merge":"npx junit-merge -d cypress/results/junit -o cypress/results/junit/results.xml",
+    "cypress:run": "npm run prereport && npx cypress run || exit 0",
+    "cypress:e2e": "start-test start  http-get://localhost:4200 cypress:run && npm run junit:merge && npm run mochawesome:merge",
 
-    "cy:open_dev" :"npx cypress open --env username=pacacierdogan@gmail.com,password=1234",
-    "cy:open_process" : "npx cypress open --env username=$DB_USERNAME,password=$PASSWORD"
+    "cy:open_dev": "npx cypress open --env username=pacacierdogan@gmail.com,password=1234",
+    "cy:open_process": "npx cypress open --env username=$DB_USERNAME,password=$PASSWORD"
   },
-
   "engines": {
     "node": "^14.20.0 || ^16.13.0 || ^18.10.0"
   },
@@ -44,14 +47,20 @@
     "@types/jasmine": "~4.3.1",
     "@types/marked": "^5.0.0",
     "cypress": "^12.13.0",
+    "cypress-multi-reporters": "^1.6.3",
     "husky": "^8.0.3",
     "jasmine-core": "~5.0.0",
+    "junit-merge": "^2.0.0",
     "karma": "~6.4.2",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "lint-staged": "^13.2.2",
+    "mocha-junit-reporter": "^2.2.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
     "typescript": "~5.0.4"

@@ -4,6 +4,10 @@ module.exports = defineConfig({
   viewportHeight : 1080,
   viewportwidth : 1920,
   "video" : true,
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    configFile: 'reporter-config.json',
+  },
   /**eger test ortamında veya farklı ortamlarda testler calıstırılmak istenirse burada belirtilen api urller ver credentiallar ile 
    * bu test ortamlarında senaryolar calstırılabilir
    */
@@ -20,6 +24,13 @@ module.exports = defineConfig({
     apiUrl :    "campus.uat-hub.ku.edu.tr"
  */
   },
+
+  retries: {
+    runMode: 2,
+    openMode:0
+  },
+
+
   e2e: {
 
     setupNodesEvents(on,config){
